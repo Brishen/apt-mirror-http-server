@@ -43,9 +43,11 @@ echo "[$(date)] Starting apache server"
 service apache2 start
 
 while true; do
-    echo "[$(date)] Starting apt-mirror"
-    apt-mirror
-    echo "[$(date)] Completed"
-    echo "[$(date)] Sleeping $RESYNC_PERIOD to execute apt-mirror again ======"
-    sleep "$RESYNC_PERIOD"
+	if $SYNC; then
+		echo "[$(date)] Starting apt-mirror"
+		apt-mirror
+		echo "[$(date)] Completed"
+		echo "[$(date)] Sleeping $RESYNC_PERIOD to execute apt-mirror again ======"
+		sleep "$RESYNC_PERIOD"
+	fi
 done

@@ -1,8 +1,8 @@
-FROM ubuntu:16.04
-MAINTAINER Terry Chen <seterrychen@gmail.com>
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV RESYNC_PERIOD 12h
+ENV SYNC false
 
 RUN apt-get update \
   && apt-get install --no-install-recommends -y apt-mirror apache2 \
@@ -10,6 +10,8 @@ RUN apt-get update \
   && apt-get autoclean \
   && rm -rf /var/lib/apt/lists/*
 
+ADD mirror.list /etc/apt/mirror.list
+ADD apache2.conf /etc/apache2/apache2.conf
 EXPOSE 80
 COPY setup.sh /setup.sh
 
